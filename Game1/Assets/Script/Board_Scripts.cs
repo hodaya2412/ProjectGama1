@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class Example : MonoBehaviour
+public class Board_Scripts : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float speed;
     float directionX;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,4 +30,9 @@ public class Example : MonoBehaviour
         rb.linearVelocity = new(directionX * speed, rb.linearVelocity.y);
     
 }
+    public float GetHorizontalVelocity()
+    {
+        return rb.linearVelocity.x;
+    }
+
 }

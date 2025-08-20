@@ -5,6 +5,10 @@ public class Ball_Scripts : MonoBehaviour
 {
     Rigidbody2D rb;
     [SerializeField] float jumpSpeed;
+    [SerializeField] float MaxBoundsX;
+    float PushLeft = -1f;
+    float PushRight = 1f;
+    float horizontalPushFromWall = 5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,24 +32,36 @@ public class Ball_Scripts : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Board"))
         {
-            Jump();
+            Jump(other);
         }
+
 
         if (other.gameObject.CompareTag("Lava"))
         {
-            GameOver();
+            GameOverLose();
 
         }
+        
+        if (other.gameObject.CompareTag("Wall"))
+            {
+                PushBallAwayFromWall(other);
+            }
 
     }
 
-    private void Jump()
+    private void PushBallAwayFromWall(Collision2D other)
+    {
+        float pushDirection = transform.position.x < other.transform.position.x ? PushLeft : PushRight;
+
+        rb.linearVelocity = new Vector2(pushDirection * horizontalPushFromWall, rb.linearVelocity.y);
+    }
+
+    private void Jump(Collision2D other)
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpSpeed);
-
     }
 
-     private void GameOver()
+     private void GameOverLose()
     {
         Debug.Log("Game is Over");
     }
