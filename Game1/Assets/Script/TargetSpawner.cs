@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TargetSpawner : MonoBehaviour
@@ -15,18 +16,25 @@ public class TargetSpawner : MonoBehaviour
        
 
     }
-
-    void Update()
-    {
-    
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ball"))
         {
-            Destroy(gameObject, delayForDestroy);
+            StartCoroutine(BlinkBeforeDestroy());
         }
-
     }
+
+    IEnumerator BlinkBeforeDestroy()
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        for (int i = 0; i < 3; i++)
+        {
+            sr.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            sr.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+        }
+        Destroy(gameObject);
+    }
+
 }
