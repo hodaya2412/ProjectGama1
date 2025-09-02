@@ -30,9 +30,9 @@ public class TargetSpawner : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             sr.enabled = false;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(delayForDestroy);
             sr.enabled = true;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(delayForDestroy);
         }
         Destroy(gameObject);
     }
